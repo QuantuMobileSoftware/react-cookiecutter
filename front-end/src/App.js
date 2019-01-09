@@ -4,8 +4,13 @@ import "tachyons";
 import "./App.css";
 
 class App extends Component {
+  state = {
+    autorized: false
+  };
+
   render() {
-    return <div className="App">{routes}</div>;
+    const { autorized } = this.state;
+    return <div className="App">{routes(autorized)}</div>;
   }
 }
 
