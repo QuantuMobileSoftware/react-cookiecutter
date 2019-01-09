@@ -13,12 +13,17 @@ class SignInForm extends PureComponent {
     this.setState({ [e.target.name]: value });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmit(this.state);
+  };
+
   render() {
     const { email, password, remember } = this.state;
-    const { isSubmitting, onSubmit } = this.props;
+    const { isSubmitting } = this.props;
 
     return (
-      <form onSubmit={onSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <fieldset className="ba b--transparent ph0 mh0">
           <legend className="f4 fw6 ph0 mh0">Sign In</legend>
           <div className="mt3">

@@ -20,12 +20,9 @@ class SignInPage extends Component {
     this.setState({ [e.target.name]: value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
+  handleSubmit = data => {
     this.setState({ isSubmitting: true, error: null });
 
-    const data = this.state;
     this.submitForm(data)
       .then(res => {
         console.log(res);
