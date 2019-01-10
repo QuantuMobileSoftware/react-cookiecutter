@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  database:
+    image: postgres
+    expose:
+      - 5432
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: /bin/bash -c "python3.7 manage.py migrate && python3.7 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    links:
+      - database:db
+
+  frontend:
+    image: node
+    volumes:
+      - ./frontend:/frontend
+    working_dir: /frontend
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    command: /bin/bash -c "yarn install && yarn start"

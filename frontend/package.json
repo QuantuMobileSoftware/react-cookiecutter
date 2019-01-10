@@ -1,5 +1,5 @@
 {
-  "name": "front-end",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,5 +26,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {}
+  "devDependencies": {},
+  "proxy": "http://client:9000"
 }

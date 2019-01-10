@@ -15,9 +15,9 @@ class SignInPage extends Component {
     return response;
   }
 
-  handleChange = e => {
-    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    this.setState({ [e.target.name]: value });
+  handleChange = ({ target }) => {
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    this.setState({ [target.name]: value });
   };
 
   handleSubmit = data => {
@@ -25,22 +25,24 @@ class SignInPage extends Component {
 
     this.submitForm(data)
       .then(res => {
-        console.log(res);
         this.setState({ isSubmitting: false });
+        console.log(res);
       })
       .catch(err => {
         const error = parseErr(err);
-        console.error(error);
         this.setState({
           isSubmitting: false,
-          error: { status: error.response.status, statusText: error.response.statusText }
+          error: {
+            status: error.response.status,
+            statusText: error.response.statusText
+          }
         });
+        console.error(error);
       });
   };
 
   render() {
     const { error, isSubmitting } = this.state;
-    console.log(isSubmitting);
 
     return (
       <main className="pa4 black-80 dt vh-100 w-100">
