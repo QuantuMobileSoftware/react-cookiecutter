@@ -1,2 +1,2 @@
 # react-cookiecutter
-React with django Cookiecutter authorization proof of concept
+React with django csrf authorization proof of concept
