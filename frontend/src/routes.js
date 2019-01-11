@@ -10,16 +10,14 @@ const restricted = <Home path="/" />;
 const shared = [<NotFound key="1" default />, <About key="2" path="about" />];
 const auth = <SignInPage path="sign-in" />;
 
-const routes = authorized => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {!authorized && <Redirect to="sign-in" noThrow />}
-      <Router>
-        {authorized ? restricted : auth}
-        {shared}
-      </Router>
-    </Suspense>
-  );
-};
+const routes = authorized => (
+  <Suspense fallback={<div>Loading...</div>}>
+    {!authorized && <Redirect to="sign-in" noThrow />}
+    <Router>
+      {authorized ? restricted : auth}
+      {shared}
+    </Router>
+  </Suspense>
+);
 
 export default routes;

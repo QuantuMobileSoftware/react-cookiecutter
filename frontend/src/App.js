@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import routes from "./routes";
 import "tachyons";
-import "./App.css";
+import "./style.scss";
 
 class App extends Component {
   state = {
