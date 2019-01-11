@@ -12,6 +12,8 @@ export default {
   }
 };
 
+// utils
+
 export const handleErr = err => {
   let errorText = "";
   if (err.response) {
