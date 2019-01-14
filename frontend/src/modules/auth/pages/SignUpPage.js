@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import api, { parseErr } from "../../../api";
 import styled from "styled-components";
 import { Link } from "@reach/router";
-import SignInForm from "../components/SignInForm";
+import SignUpForm from "../components/SignUpForm";
 import Message from "../../../components/Message";
 
 class SignInPage extends Component {
@@ -12,7 +12,7 @@ class SignInPage extends Component {
   };
 
   async submitForm(data) {
-    const response = await api.auth.login(data);
+    const response = await api.auth.register(data);
     return response;
   }
 
@@ -53,13 +53,11 @@ class SignInPage extends Component {
       <main className="pa4 black-80 dt vh-100 w-100">
         <div className="dtc v-mid">
           <SignInPage.FormWrapper className="measure center">
-            <SignInForm isSubmitting={isSubmitting} onSubmit={this.handleSubmit} />
+            <SignUpForm isSubmitting={isSubmitting} onSubmit={this.handleSubmit} />
             <div className="f6 lh-copy mt3">
-              <Link className="dim black" to="/sign-up">
-                Sign up
-              </Link>
-              <Link className="dim black db" to="/restore-password">
-                Forgot your password?
+              Have an account?{" "}
+              <Link className="dim black" to="/sign-in">
+                Sign in
               </Link>
             </div>
 

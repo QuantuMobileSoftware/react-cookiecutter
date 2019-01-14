@@ -1,18 +1,18 @@
 import React, { Suspense } from "react";
-import { Router, Redirect } from "@reach/router";
+import { Router } from "@reach/router";
 
 const SignInPage = React.lazy(() => import("./modules/auth/pages/SignInPage"));
+const SignUpPage = React.lazy(() => import("./modules/auth/pages/SignUpPage"));
 const Home = () => <div>Home</div>;
 const About = () => <div>About</div>;
 const NotFound = () => <div>Not Found</div>;
 
 const restricted = <Home path="/" />;
 const shared = [<NotFound key="1" default />, <About key="2" path="about" />];
-const auth = <SignInPage path="sign-in" />;
+const auth = [<SignInPage key="1" path="sign-in" />, <SignUpPage key="2" path="sign-up" />];
 
 const routes = authorized => (
   <Suspense fallback={<div>Loading...</div>}>
-    {!authorized && <Redirect to="sign-in" noThrow />}
     <Router>
       {authorized ? restricted : auth}
       {shared}
