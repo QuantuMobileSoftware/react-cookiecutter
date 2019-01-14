@@ -14,7 +14,6 @@ class SignInForm extends PureComponent {
   };
 
   handleSubmit = e => {
-    console.log("preventDefault");
     e.preventDefault();
     this.props.onSubmit(this.state);
   };
