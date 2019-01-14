@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import api, { parseErr } from "../../../api";
-import styled from "styled-components";
 import { Link } from "@reach/router";
 import SignUpForm from "../components/SignUpForm";
 import Message from "../../../components/Message";
