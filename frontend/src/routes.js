@@ -3,27 +3,30 @@ import { Router, Redirect } from "@reach/router";
 
 const SignInPage = React.lazy(() => import("./modules/auth/pages/SignInPage"));
 const SignUpPage = React.lazy(() => import("./modules/auth/pages/SignUpPage"));
+const NotFoundPage = React.lazy(() => import("./modules/landing/pages/NotFoundPage"));
 const Home = () => <div>Home</div>;
 const About = () => <div>About</div>;
-const NotFound = () => <div>Not Found</div>;
 
-const restricted = [<Home path="/" />];
-const shared = [<NotFound default />, <About path="about" />];
-const auth = [
-  <Redirect from="/" to="sign-in" />,
-  <SignInPage path="sign-in" />,
-  <SignUpPage path="sign-up" />
-];
-
-const mapLinks = arr => arr.map((item, i) => ({ ...item, key: i }));
-
-const routes = authorized => (
+const Routes = ({ authorized }) => (
   <Suspense fallback={<div>Loading...</div>}>
-    <Router>
-      {authorized ? mapLinks(restricted) : mapLinks(auth)}
-      {mapLinks(shared)}
-    </Router>
+    <RoutesContainer show={authorized}>
+      <Home path="/" />
+      <NotFoundPage default />
+    </RoutesContainer>
+
+    <RoutesContainer show={!authorized}>
+      <Redirect from="/" to="sign-in" noThrow />
+      <SignInPage path="sign-in" />
+      <SignUpPage path="sign-up" />
+      <NotFoundPage default />
+    </RoutesContainer>
+
+    <RoutesContainer>
+      <About path="about" />
+    </RoutesContainer>
   </Suspense>
 );
 
-export default routes;
+const RoutesContainer = ({ show = true, children }) => (show ? <Router>{children}</Router> : null);
+
+export default Routes;

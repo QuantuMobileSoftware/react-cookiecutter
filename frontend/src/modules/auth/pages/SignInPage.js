@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import api, { parseErr } from "../../../api";
-import styled from "styled-components";
 import { Link } from "@reach/router";
 import SignInForm from "../components/SignInForm";
 import Message from "../../../components/Message";
@@ -34,8 +33,8 @@ class SignInPage extends Component {
         this.setState({
           isSubmitting: false,
           error: {
-            status: error.response.status,
-            statusText: error.response.statusText
+            status: error.response.statusText,
+            data: error.response.data
           }
         });
         console.error(error);
@@ -52,8 +51,22 @@ class SignInPage extends Component {
     return (
       <main className="pa4 black-80 dt vh-100 w-100">
         <div className="dtc v-mid">
-          <SignInPage.FormWrapper className="measure center">
-            <SignInForm isSubmitting={isSubmitting} onSubmit={this.handleSubmit} />
+          <div className="measure center">
+            <SignInForm
+              isSubmitting={isSubmitting}
+              onSubmit={this.handleSubmit}
+              errorMsg={
+                error && (
+                  <Message
+                    className="error-message"
+                    title={error.status}
+                    onClose={this.handleMessageClose}
+                  >
+                    {error.data}
+                  </Message>
+                )
+              }
+            />
             <div className="f6 lh-copy mt3">
               <Link className="dim black" to="/sign-up">
                 Sign up
@@ -62,33 +75,11 @@ class SignInPage extends Component {
                 Forgot your password?
               </Link>
             </div>
-
-            {error && (
-              <SignInPage.Message className="message-holder">
-                <Message
-                  className="error-message"
-                  title={`Error ${error.status}`}
-                  onClose={this.handleMessageClose}
-                >
-                  {error.statusText}
-                </Message>
-              </SignInPage.Message>
-            )}
-          </SignInPage.FormWrapper>
+          </div>
         </div>
       </main>
     );
   }
 }
-
-SignInPage.FormWrapper = styled.div`
-  position: relative;
-`;
-
-SignInPage.Message = styled.div`
-  position: absolute;
-  width: 100%;
-  left: 0;
-`;
 
 export default SignInPage;

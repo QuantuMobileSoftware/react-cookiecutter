@@ -20,12 +20,13 @@ class SignUpForm extends PureComponent {
 
   render() {
     const { name, email, password } = this.state;
-    const { isSubmitting } = this.props;
+    const { errorMsg, isSubmitting } = this.props;
 
     return (
       <form onSubmit={this.handleSubmit}>
         <fieldset className="ba b--transparent ph0 mh0">
-          <legend className="f4 fw6 ph0 mh0">Sign Up</legend>
+          <legend className="f3 fw6 ph0 mh0">Sign Up</legend>
+          {errorMsg}
           <div className="mt3">
             <label className="db fw6 lh-copy f6" htmlFor="name">
               Full name

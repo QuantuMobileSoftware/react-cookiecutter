@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import routes from "./routes";
+import Routes from "./routes";
 import "tachyons";
 import "./style.scss";
 
@@ -10,7 +10,11 @@ class App extends Component {
 
   render() {
     const { autorized } = this.state;
-    return <div className="App">{routes(autorized)}</div>;
+    return (
+      <div className="App">
+        <Routes authorized={autorized} />
+      </div>
+    );
   }
 }
 

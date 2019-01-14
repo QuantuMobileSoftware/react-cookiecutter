@@ -34,8 +34,8 @@ class SignInPage extends Component {
         this.setState({
           isSubmitting: false,
           error: {
-            status: error.response.status,
-            statusText: error.response.statusText
+            status: error.response.statusText,
+            data: error.response.data
           }
         });
         console.error(error);
@@ -52,41 +52,33 @@ class SignInPage extends Component {
     return (
       <main className="pa4 black-80 dt vh-100 w-100">
         <div className="dtc v-mid">
-          <SignInPage.FormWrapper className="measure center">
-            <SignUpForm isSubmitting={isSubmitting} onSubmit={this.handleSubmit} />
+          <div className="measure center">
+            <SignUpForm
+              isSubmitting={isSubmitting}
+              onSubmit={this.handleSubmit}
+              errorMsg={
+                error && (
+                  <Message
+                    className="error-message"
+                    title={error.status}
+                    onClose={this.handleMessageClose}
+                  >
+                    {error.data}
+                  </Message>
+                )
+              }
+            />
             <div className="f6 lh-copy mt3">
               Have an account?{" "}
               <Link className="dim black" to="/sign-in">
                 Sign in
               </Link>
             </div>
-
-            {error && (
-              <SignInPage.Message className="message-holder">
-                <Message
-                  className="error-message"
-                  title={`Error ${error.status}`}
-                  onClose={this.handleMessageClose}
-                >
-                  {error.statusText}
-                </Message>
-              </SignInPage.Message>
-            )}
-          </SignInPage.FormWrapper>
+          </div>
         </div>
       </main>
     );
   }
 }
-
-SignInPage.FormWrapper = styled.div`
-  position: relative;
-`;
-
-SignInPage.Message = styled.div`
-  position: absolute;
-  width: 100%;
-  left: 0;
-`;
 
 export default SignInPage;
