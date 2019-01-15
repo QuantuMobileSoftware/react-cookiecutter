@@ -15,11 +15,6 @@ class SignInPage extends Component {
     return response;
   }
 
-  handleChange = ({ target }) => {
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    this.setState({ [target.name]: value });
-  };
-
   handleSubmit = data => {
     this.setState({ isSubmitting: true, error: null });
 

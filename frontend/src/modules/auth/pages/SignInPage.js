@@ -1,6 +1,10 @@
 import React, { Component } from "react";
-import api, { parseErr } from "../../../api";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { Link } from "@reach/router";
+
+import * as authActions from "../auth.actions";
+import api, { parseErr } from "../../../api";
 import SignInForm from "../components/SignInForm";
 import Message from "../../../components/Message";
 
@@ -15,18 +19,14 @@ class SignInPage extends Component {
     return response;
   }
 
-  handleChange = ({ target }) => {
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    this.setState({ [target.name]: value });
-  };
-
   handleSubmit = data => {
+    const { setUserData } = this.props;
     this.setState({ isSubmitting: true, error: null });
 
     this.submitForm(data)
       .then(res => {
         this.setState({ isSubmitting: false });
-        console.log(res);
+        setUserData({ isAuthenticated: true, res });
       })
       .catch(err => {
         const error = parseErr(err);
@@ -82,4 +82,27 @@ class SignInPage extends Component {
   }
 }
 
-export default SignInPage;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+
+const mapDispatchToProps = {
+  setUserData: authActions.set_user
+};
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     dispatchLogin: dispatch(authActions.login())
+//   };
+// };
+
+const enhance = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+);
+
+export default enhance(SignInPage);
